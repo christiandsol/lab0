@@ -4,37 +4,34 @@
 #include <linux/sched.h>
 #include <linux/seq_file.h>
 
-#define for_each_process(p) for (p = &init_task ; (p = next_task(p)) != &init_task ; )
-
 static struct proc_dir_entry *entry;
 
 static int proc_count(struct seq_file *m, void *v)
 {
-	// TODO: it's all yours
+    // TODO: it's all yours
     struct task_struct *task;
-	int count = 0;
+    int count = 0;
 
-	// Traverse the task list
-	for_each_process(task)
-	{
-		count++; // Increment count for each process found
-	}
+    // Traverse the task list
+    for_each_process(task)
+    {
+        count++; // Increment count for each process found
+    }
 
-	return count;
-	return 0;
+    return count;
 }
 
 static int __init proc_count_init(void)
 {
-	entry = proc_create_single("count", 0, NULL, proc_count);
-	pr_info("proc_count: init\n");
-	return 0;
+    entry = proc_create_single("count", 0, NULL, proc_count);
+    pr_info("proc_count: init\n");
+    return 0;
 }
 
 static void __exit proc_count_exit(void)
 {
-	proc_remove(entry);
-	pr_info("proc_count: exit\n");
+    proc_remove(entry);
+    pr_info("proc_count: exit\n");
 }
 
 module_init(proc_count_init);
