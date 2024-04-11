@@ -4,6 +4,8 @@
 #include <linux/sched.h>
 #include <linux/seq_file.h>
 
+// #define for_each_process(p) for (p = &init_task ; (p = next_task(p)) != &init_task ; )
+
 static struct proc_dir_entry *entry;
 
 static int proc_count(struct seq_file *m, void *v)
@@ -18,7 +20,7 @@ static int proc_count(struct seq_file *m, void *v)
         count++; // Increment count for each process found
     }
 
-    return count;
+    seq_printf(m, "%d\n", count);
 }
 
 static int __init proc_count_init(void)
